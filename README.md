@@ -45,9 +45,9 @@ Download the raw dataset files using:
 huggingface-cli download MiniLLM/dolly --repo-type dataset --local-dir data/dolly/
 ```
 
-### 3. Download Tokenizer
+### 3. Download Model
 
-Create the tokenizer directory and download the tokenizer:
+Create the model directory and download the GPT-2 Medium model:
 
 ```bash
 mkdir -p checkpoints/gpt2-medium
