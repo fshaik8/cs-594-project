@@ -78,4 +78,50 @@ processed_data/
     ├── train.bin
     └── train.idx
 ```
+## Models
+
+### 1. GPT-2 Medium (Student)
+
+```
+mkdir -p checkpoints/gpt2-medium
+huggingface-cli download openai-community/gpt2-medium \
+    --repo-type model --local-dir checkpoints/gpt2-medium
+```
+### 2. GPT-2 XL (Teacher)
+
+```
+mkdir -p checkpoints/gpt2-xlarge
+huggingface-cli download openai-community/gpt2-xl \
+    --repo-type model --local-dir checkpoints/gpt2-xlarge
+```
+## Training
+
+### 1. SFT (Student baseline)
+
+```
+bash scripts/gpt2/sft/sft_medium.sh <PROJECT_ROOT>
+```
+### 2. KD (λ=0.5)
+
+```
+bash scripts/gpt2/kd/kd_medium.sh <PROJECT_ROOT>
+```
+### 3. MiniLLM (reverse-KL PPO)
+
+```
+bash scripts/gpt2/minillm/train_medium_xl.sh <PROJECT_ROOT>
+```
+
+Each script automatically uses configs/deepspeed/ds_config_zero1_fp16.json and the minillm/ library.
+
+## Evaluation
+Evaluate on Dolly test set:
+
+```
+bash scripts/gpt2/eval/eval_main_dolly.sh <PROJECT_ROOT> \
+  --model-path <checkpoint_dir> \
+  --save <results_dir>
+```
+
+
 
